@@ -94,7 +94,8 @@ if (empty($this->config['cookie_name']))
 {
     $this->config['cookie_name'] = ini_get('session.name');
 } else {
-    if (session_status() == PHP_SESSION_NONE) {
+    // only set session name if headers are not yet sent
+    if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
         session_name($this->config['cookie_name']);
     }
 }
