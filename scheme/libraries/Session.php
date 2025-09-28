@@ -103,12 +103,15 @@ if (empty($this->config['cookie_name']))
 
 		//Set up session expiration
 	    if (empty($this->config['sess_expiration']))
-		{
-	    	$this->config['sess_expiration'] = (int) ini_get('session.gc_maxlifetime');
-	    } else {
-	    	$this->config['sess_expiration'] = (int) $this->config['sess_expiration'];
-	    	ini_set('session.gc_maxlifetime', $this->config['sess_expiration']);
-	    }
+{
+    $this->config['sess_expiration'] = (int) ini_get('session.gc_maxlifetime');
+} else {
+    $this->config['sess_expiration'] = (int) $this->config['sess_expiration'];
+    if (!headers_sent()) {
+        ini_set('session.gc_maxlifetime', $this->config['sess_expiration']);
+    }
+}
+
 
 	    if (isset($this->config['cookie_expiration']))
 		{
