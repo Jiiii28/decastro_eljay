@@ -104,11 +104,34 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
             text-decoration: underline;
         }
 
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Pagination Container */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
         }
+
+        .pagination ul {
+            list-style: none;
+            display: inline-flex;
+            gap: 8px;
+            padding: 0;
+        }
+
+        .pagination a {
+            padding: 8px 14px;
+            background: #fbc2eb;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #d63384;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .pagination a:hover {
+            background: #d63384;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -131,11 +154,16 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
                     <td><?= $user['email']; ?></td>
                     <td class="action-links">
                         <a href="<?= site_url('users/update/'.$user['id']); ?>">✏️ Update</a> | 
-                        <a href="<?= site_url('users/delete/'.$user['id']); ?>">🗑️ Delete</a>
+                        <a href="<?= site_url('users/delete/'.$user['id']); ?>" onclick="return confirm('Are you sure?')">🗑️ Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
+
+        <!-- ✅ Pagination Links -->
+        <div class="pagination">
+            <?= $pagination ?>
+        </div>
     </div>
 </body>
 </html>
