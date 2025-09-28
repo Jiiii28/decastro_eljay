@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 class Session {
@@ -80,7 +82,10 @@ class Session {
         if (!empty($this->config['sess_driver']) && $this->config['sess_driver'] == 'file') {
             require_once 'Session/FileSessionHandler.php';
             $handler = new FileSessionHandler();
-            session_set_save_handler($handler, TRUE);
+            if (session_status() == PHP_SESSION_NONE) {
+    session_set_save_handler($handler, TRUE);
+}
+
         } elseif (!empty($this->config['sess_driver']) && $this->config['sess_driver'] == 'database') {
             // database handler placeholder
         }
@@ -341,4 +346,5 @@ class Session {
         $this->mark_as_flash(is_array($data) ? array_keys($data) : $data);
     }
 }
+ob_end_flush();
 ?>
