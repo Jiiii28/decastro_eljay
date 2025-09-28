@@ -90,12 +90,15 @@ class Session {
 	    }
 
 		//Set up cookie name
-	    if (empty($this->config['cookie_name']))
-		{
-	    	$this->config['cookie_name'] = ini_get('session.name');
-	    } else {
-	    	ini_set('session.name', $this->config['cookie_name']);
-	    }
+if (empty($this->config['cookie_name']))
+{
+    $this->config['cookie_name'] = ini_get('session.name');
+} else {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_name($this->config['cookie_name']);
+    }
+}
+
 
 		//Set up session expiration
 	    if (empty($this->config['sess_expiration']))
