@@ -49,8 +49,8 @@ class Usersmodel extends Model {
             session_start();
         }
 
-        if (isset($_SESSION['user']['id'])) {
-            return $this->get_user_by_id($_SESSION['user']['id']);
+        if (isset($_SESSION['username']['id'])) {
+            return $this->get_user_by_id($_SESSION['username']['id']);
         }
 
         return null;
