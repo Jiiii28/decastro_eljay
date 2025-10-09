@@ -6,13 +6,12 @@
   <title>Update User</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
   <style>
     body {
       min-height: 100vh;
       margin: 0;
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #e8f5e9, #f1f8f6);
+      background: linear-gradient(135deg, #e3f2fd, #f5f9ff);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,16 +24,16 @@
       max-width: 450px;
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
       text-align: center;
     }
 
     .glass-container h1 {
       font-size: 2em;
       font-weight: 600;
-      color: #2e7d32;
+      color: #1565c0;
       margin-bottom: 25px;
     }
 
@@ -48,7 +47,7 @@
     .form-group select {
       width: 100%;
       padding: 12px 14px;
-      border: 1px solid #c8e6c9;
+      border: 1px solid #bbdefb;
       border-radius: 8px;
       font-size: 14px;
       background: #fff;
@@ -59,8 +58,8 @@
 
     .form-group input:focus,
     .form-group select:focus {
-      border-color: #43a047;
-      box-shadow: 0 0 6px rgba(67, 160, 71, 0.4);
+      border-color: #1e88e5;
+      box-shadow: 0 0 6px rgba(30, 136, 229, 0.4);
       outline: none;
     }
 
@@ -71,7 +70,7 @@
       transform: translateY(-50%);
       cursor: pointer;
       font-size: 1.1em;
-      color: #43a047;
+      color: #1e88e5;
     }
 
     .btn-submit {
@@ -79,7 +78,7 @@
       padding: 14px;
       border: none;
       border-radius: 8px;
-      background: #2e7d32;
+      background: #1565c0;
       color: #fff;
       font-size: 1.1em;
       font-weight: 500;
@@ -88,7 +87,7 @@
     }
 
     .btn-submit:hover {
-      background: #1b5e20;
+      background: #0d47a1;
       transform: translateY(-2px);
     }
 
@@ -96,17 +95,24 @@
       display: inline-block;
       margin-top: 20px;
       padding: 12px 20px;
-      background: #66bb6a;
+      background: #64b5f6;
       color: #fff;
-      border-radius: 6px;
+      border-radius: 8px;
       text-decoration: none;
       font-weight: 500;
       transition: 0.3s;
     }
 
     .btn-return:hover {
-      background: #388e3c;
+      background: #1976d2;
       transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .glass-container {
+        margin: 20px;
+        padding: 30px;
+      }
     }
   </style>
 </head>
@@ -117,25 +123,25 @@
       <div class="form-group">
         <input type="text" name="username" value="<?=html_escape($user['username']);?>" placeholder="Username" required>
       </div>
+
       <div class="form-group">
         <input type="email" name="email" value="<?=html_escape($user['email']);?>" placeholder="Email" required>
       </div>
 
-              <?php if(!empty($logged_in_user) && $logged_in_user['role'] === 'admin'): ?>
-          <div class="form-group">
-            <select name="role" required>
-              <option value="user" <?= $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
-              <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
-            </select>
-          </div>
+      <?php if(!empty($logged_in_user) && $logged_in_user['role'] === 'admin'): ?>
+        <div class="form-group">
+          <select name="role" required>
+            <option value="user" <?= $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
+            <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
+          </select>
+        </div>
 
-          <div class="form-group">
-            <input type="password" placeholder="New Password (leave blank if unchanged)" 
-                  name="password" id="password">
-            <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
-          </div>
-        <?php endif; ?>
-
+        <div class="form-group">
+          <input type="password" placeholder="New Password (leave blank if unchanged)" 
+                name="password" id="password">
+          <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+        </div>
+      <?php endif; ?>
 
       <button type="submit" class="btn-submit">Update User</button>
     </form>
@@ -150,7 +156,6 @@
       togglePassword.addEventListener('click', function () {
         const type = password.type === 'password' ? 'text' : 'password';
         password.type = type;
-
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
       });
