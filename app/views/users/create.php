@@ -1,148 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create User</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Create User</title>
+    <style>
+        * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #388e3c; background: linear-gradient(160deg, #e8f5e9, #c8e6c9); }
+        .bg-decor { position: fixed; inset: 0; z-index: -1; pointer-events: none; background:
+            radial-gradient(600px 600px at 0% 0%, rgba(56,142,60,.12), transparent 60%),
+            radial-gradient(600px 600px at 100% 0%, rgba(76,175,80,.10), transparent 60%),
+            radial-gradient(600px 600px at 0% 100%, rgba(139,195,74,.08), transparent 60%),
+            radial-gradient(600px 600px at 100% 100%, rgba(102,187,106,.10), transparent 60%);
+            animation: floatBg 16s ease-in-out infinite alternate; }
+        .container { max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    .card { background: #ffffff; border: 2px solid #a5d6a7; border-radius: 14px; box-shadow: 0 10px 30px rgba(56,142,60,.12), 0 4px 12px rgba(76,175,80,.10); overflow: hidden; transform: translateY(8px); opacity: 0; animation: cardIn .6s ease-out forwards; }
+    .card-header { padding: 16px 20px; border-bottom: 2px solid #a5d6a7; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); }
+    .title { margin: 0; font-size: 20px; color: #388e3c; font-weight: 700; }
+        .card-body { padding: 20px; animation: fadeIn .6s ease .15s both; background: #ffffff; }
+        .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #388e3c; }
+    input[type="text"], input[type="email"] { width: 100%; max-width: 420px; padding: 12px 14px; border: 2px solid #a5d6a7; border-radius: 8px; background: #f1f8e9; transition: border-color .3s ease, box-shadow .3s ease; color: #388e3c; }
+    input[type="text"]:focus, input[type="email"]:focus { outline: none; border-color: #388e3c; box-shadow: 0 0 0 3px rgba(56,142,60,.12); }
+        .actions { display: flex; gap: 8px; margin-top: 12px; }
+        .btn { display: inline-block; padding: 12px 18px; text-decoration: none; border-radius: 10px; border: 2px solid transparent; font-size: 14px; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,.15); transition: transform .08s ease, box-shadow .2s ease, background-color .2s ease; cursor: pointer; }
+        .btn:active { transform: translateY(1px); box-shadow: 0 0 0 rgba(0,0,0,0); }
+    .btn-primary { background: linear-gradient(135deg, #388e3c 0%, #43a047 100%); color: white; border-color: #388e3c; }
+    .btn-primary:hover { background: linear-gradient(135deg, #43a047 0%, #66bb6a 100%); border-color: #43a047; }
+    .btn-secondary { background: linear-gradient(135deg, #f1f8e9 0%, #c8e6c9 100%); color: #388e3c; border-color: #388e3c; }
+    .btn-secondary:hover { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); border-color: #43a047; }
 
-  <style>
-    body {
-      min-height: 100vh;
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #e8f5e9, #f1f8f6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .glass-container {
-      position: relative;
-      padding: 40px;
-      width: 100%;
-      max-width: 450px;
-      background: rgba(255, 255, 255, 0.85);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-
-    .glass-container h1 {
-      font-size: 2em;
-      font-weight: 600;
-      color: #2e7d32;
-      margin-bottom: 25px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-      text-align: left;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #c8e6c9;
-      border-radius: 8px;
-      font-size: 14px;
-      background: #fff;
-      color: #333;
-      transition: 0.3s ease;
-      box-sizing: border-box;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: #43a047;
-      box-shadow: 0 0 6px rgba(67, 160, 71, 0.4);
-      outline: none;
-    }
-
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: #2e7d32;
-      color: #fff;
-      font-size: 1.1em;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    .btn-submit:hover {
-      background: #1b5e20;
-      transform: translateY(-2px);
-    }
-
-    .link-wrapper {
-      margin-top: 20px;
-    }
-
-    .btn-link {
-      display: inline-block;
-      padding: 12px 20px;
-      background: #66bb6a;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    .btn-link:hover {
-      background: #388e3c;
-      transform: translateY(-2px);
-    }
-  </style>
+        @keyframes cardIn { to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes floatBg { 0% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; } 100% { background-position: 10% 5%, 90% 10%, 5% 90%, 95% 95%; } }
+    </style>
 </head>
 <body>
-  <div class="glass-container">
-  <h1>Create User</h1>
-
-  <!-- ✅ Error Message -->
-  <?php if (!empty($error)): ?>
-      <div class="alert alert-danger" style="margin-bottom: 15px; font-size: 0.9em;">
-          <?= $error ?>
-      </div>
-  <?php endif; ?>
-  <!-- ✅ End messages -->
-
-  <form id="user-form" action="<?= site_url('users/create/') ?>" method="POST">
-      <div class="form-group">
-        <input type="text" name="username" placeholder="Username" required 
-               value="<?= isset($username) ? html_escape($username) : '' ?>">
-      </div>
-      <div class="form-group">
-        <input type="email" name="email" placeholder="Email" required 
-               value="<?= isset($email) ? html_escape($email) : '' ?>">
-      </div>
-      <div class="form-group">
-        <input type="password" name="password" placeholder="Password" required>
-      </div>
-      <div class="form-group">
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-      </div>
-      <div class="form-group">
-        <select name="role" required>
-          <option value="">-- Select Role --</option>
-          <option value="admin" <?= isset($role) && $role=="admin" ? 'selected' : '' ?>>Admin</option>
-          <option value="user" <?= isset($role) && $role=="user" ? 'selected' : '' ?>>User</option>
-        </select>
-      </div>
-      <button type="submit" class="btn-submit">Create User</button>
-  </form>
-
-  <div class="link-wrapper">
-    <a href="<?= site_url('/users'); ?>" class="btn-link">Cancel</a>
-  </div>
-
-  </div>
+    <div class="bg-decor"></div>
+    <div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="title">Create User</h1>
+        </div>
+        <div class="card-body">
+            <form action="<?= site_url('users/create') ?>" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a href="<?= site_url('users/view') ?>" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
 </body>
 </html>

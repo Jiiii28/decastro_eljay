@@ -15,8 +15,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-            background: #f8fafc;
-            color: #334155;
+            background: linear-gradient(160deg, #e8f5e9, #c8e6c9);
+            color: #388e3c;
         }
 
         .container {
@@ -30,7 +30,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
         }
 
         .header {
-            background: #3B82F6; /* lighter blue */
+            background: linear-gradient(135deg, #388e3c 0%, #43a047 100%);
             color: #ffffff;
             padding: 2rem;
             text-align: center;
@@ -142,7 +142,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
                 </div>
                 <div class="card">
                     <h3>🔗 REST API Support</h3>
-                    <p>Build RESTful APIs easily using built-in tools and conventions.</p>
+                    <p>Build robust RESTful APIs easily using built-in tools and conventions.</p>
                 </div>
                 <div class="card">
                     <h3>📘 ORM-like Models</h3>
