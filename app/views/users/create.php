@@ -1,122 +1,148 @@
-<?php 
-defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed'); 
-?>  
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User</title>
-    <style>
-        body {
-            font-family: "Poppins", Arial, sans-serif;
-            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create User</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-        .container {
-            width: 100%;
-            max-width: 420px;
-            background: #fff;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: fadeIn 0.8s ease-in-out;
-            border: 3px solid #f8b6d8;
-        }
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        h1 {
-            text-align: center;
-            color: #d63384;
-            margin-bottom: 25px;
-            font-size: 28px;
-        }
+    .glass-container {
+      position: relative;
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+      text-align: center;
+    }
 
-        label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 8px;
-            color: #7b2cbf;
-        }
+    .glass-container h1 {
+      font-size: 2em;
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 25px;
+    }
 
-        input[type="text"], input[type="email"] {
-            width: 100%;
-            padding: 12px 14px;
-            margin-bottom: 20px;
-            border: 2px solid #fbc2eb;
-            border-radius: 12px;
-            box-sizing: border-box;
-            font-size: 15px;
-            transition: 0.3s;
-            background: #fff5fa;
-        }
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
 
-        input[type="text"]:focus, input[type="email"]:focus {
-            border-color: #ff6fb5;
-            outline: none;
-            box-shadow: 0 0 8px rgba(255,111,181,0.4);
-        }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #c8e6c9;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
+      color: #333;
+      transition: 0.3s ease;
+      box-sizing: border-box;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #ff6fb5, #d63384);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #43a047;
+      box-shadow: 0 0 6px rgba(67, 160, 71, 0.4);
+      outline: none;
+    }
 
-        button:hover {
-            background: linear-gradient(135deg, #e85d9f, #b71f6e);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 18px rgba(0,0,0,0.2);
-        }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #2e7d32;
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
 
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            text-align: center;
-            color: #6a11cb;
-            text-decoration: none;
-            font-weight: 600;
-        }
+    .btn-submit:hover {
+      background: #1b5e20;
+      transform: translateY(-2px);
+    }
 
-        .back-link:hover {
-            text-decoration: underline;
-            color: #ff6fb5;
-        }
+    .link-wrapper {
+      margin-top: 20px;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .btn-link {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #66bb6a;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .btn-link:hover {
+      background: #388e3c;
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🌸 Add User 🌸</h1>
+  <div class="glass-container">
+  <h1>Create User</h1>
 
-        <form method="post" action="<?= site_url('users/create') ?>">
-            <label for="username">✨ Username</label>
-            <input type="text" name="username" id="username" required>
+  <!-- ✅ Error Message -->
+  <?php if (!empty($error)): ?>
+      <div class="alert alert-danger" style="margin-bottom: 15px; font-size: 0.9em;">
+          <?= $error ?>
+      </div>
+  <?php endif; ?>
+  <!-- ✅ End messages -->
 
-            <label for="email">💌 Email</label>
-            <input type="email" name="email" id="email" required>
+  <form id="user-form" action="<?= site_url('users/create/') ?>" method="POST">
+      <div class="form-group">
+        <input type="text" name="username" placeholder="Username" required 
+               value="<?= isset($username) ? html_escape($username) : '' ?>">
+      </div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email" required 
+               value="<?= isset($email) ? html_escape($email) : '' ?>">
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+      </div>
+      <div class="form-group">
+        <select name="role" required>
+          <option value="">-- Select Role --</option>
+          <option value="admin" <?= isset($role) && $role=="admin" ? 'selected' : '' ?>>Admin</option>
+          <option value="user" <?= isset($role) && $role=="user" ? 'selected' : '' ?>>User</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Create User</button>
+  </form>
 
-            <button type="submit">💖 Save User</button>
-        </form>
+  <div class="link-wrapper">
+    <a href="<?= site_url('/users'); ?>" class="btn-link">Cancel</a>
+  </div>
 
-        <a href="<?= site_url('users') ?>" class="back-link">⬅ Back to User List</a>
-    </div>
+  </div>
 </body>
 </html>

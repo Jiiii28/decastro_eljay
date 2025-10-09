@@ -6,7 +6,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  * 
  * Automatically generated via CLI.
  */
-class Usermodel extends Model {
+class UsersModel extends Model {
     protected $table = 'users';
     protected $primary_key = 'id';
 
@@ -49,8 +49,8 @@ class Usermodel extends Model {
             session_start();
         }
 
-        if (isset($_SESSION['username']['id'])) {
-            return $this->get_user_by_id($_SESSION['username']['id']);
+        if (isset($_SESSION['user']['id'])) {
+            return $this->get_user_by_id($_SESSION['user']['id']);
         }
 
         return null;
