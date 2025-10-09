@@ -1,135 +1,163 @@
-<?php
-defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-<style>
-    * { box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <!-- Font Awesome for eye icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: #388e3c;
-        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #f5f9ff); /* light blue background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Background decoration */
-    .bg-decor {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background:
-            radial-gradient(600px 600px at 0% 0%, rgba(56,142,60,.12), transparent 60%),
-            radial-gradient(600px 600px at 100% 0%, rgba(76,175,80,.10), transparent 60%),
-            radial-gradient(600px 600px at 0% 100%, rgba(139,195,74,.08), transparent 60%),
-            radial-gradient(600px 600px at 100% 100%, rgba(102,187,106,.10), transparent 60%);
-        animation: floatBg 16s ease-in-out infinite alternate;
+    .login-container {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
-    /* Card container */
-    .card {
-        background: #ffffff;
-        border: 2px solid #a5d6a7;
-        border-radius: 14px; 
-        box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.08); 
-        padding: 30px; 
-        width: 350px; 
-        text-align: center; 
-        animation: cardIn .6s ease-out forwards;
+    .login-container h2 {
+      font-size: 2em;
+      font-weight: 600;
+      color: #1565c0; /* deep professional blue */
+      margin-bottom: 20px;
     }
 
-    .card-header h2 {
-        margin: 0;
-        font-size: 24px;
-        color: #000000;
-        margin-bottom: 20px;
+    .error-box {
+      background: rgba(244, 67, 54, 0.1);
+      color: #d32f2f;
+      padding: 10px;
+      border: 1px solid #e57373;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
     }
 
-    input {
-        width: 100%; 
-        padding: 10px 14px; 
-        margin: 8px 0; 
-        border: 1px solid #ccc; 
-        border-radius: 10px; 
-        font-size: 14px;
+    .form-group {
+      position: relative;
+      margin-bottom: 18px;
     }
 
-    .btn-primary {
-        width: 100%;
-        padding: 10px 14px;
-        background: linear-gradient(135deg, #000000 0%, #333333 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        margin-top: 10px;
+    .form-group input {
+      width: 100%;
+      padding: 12px 40px 12px 14px;
+      font-size: 14px;
+      border: 1px solid #bbdefb; /* light blue border */
+      border-radius: 8px;
+      background: #fff;
+      color: #333;
+      transition: 0.3s ease;
+      box-sizing: border-box;
     }
 
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #333333 0%, #555555 100%);
+    .form-group input:focus {
+      border-color: #1e88e5; /* primary blue */
+      box-shadow: 0 0 6px rgba(30, 136, 229, 0.4);
+      outline: none;
     }
 
-    .message {
-        margin-top: 15px;
-        font-size: 14px;
-        color: red;
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.1em;
+      color: #1e88e5; /* blue for icon */
     }
 
-    .message.success {
-        color: green;
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #1565c0; /* dark professional blue */
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s ease;
     }
 
-    a {
-        color: #43a047; 
-        text-decoration: none; 
-        font-weight: bold;
+    .btn-submit:hover {
+      background: #0d47a1; /* navy blue */
+      transform: translateY(-2px);
     }
 
-    a:hover {
-        text-decoration: underline;
+    .group {
+      margin-top: 15px;
+      font-size: 0.9em;
     }
 
-    @keyframes cardIn { to { transform: translateY(0); opacity: 1; } }
-    @keyframes floatBg { 
-        0% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; } 
-        100% { background-position: 10% 5%, 90% 10%, 5% 90%, 95% 95%; } 
+    .group a {
+      color: #1565c0;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.2s;
     }
-</style>
+
+    .group a:hover {
+      text-decoration: underline;
+      color: #0d47a1;
+    }
+  </style>
 </head>
 <body>
-<div class="bg-decor"></div>
-<div class="card">
-    <div class="card-header">
-        <h2>Login</h2>
-    </div>
+  <div class="login-container">
+    <h2>Login</h2>
 
-    <?php if (!empty($flash['error'])): ?>
-        <p class="message"><?= $flash['error'] ?></p>
-    <?php endif; ?>
-    <?php if (!empty($flash['success'])): ?>
-        <p class="message success"><?= $flash['success'] ?></p>
+    <?php if (!empty($error)): ?>
+      <div class="error-box">
+        <?= $error ?>
+      </div>
     <?php endif; ?>
 
-    <form method="POST" action="<?= site_url('auth/login') ?>">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit" class="btn-primary">Login</button>
+    <form method="post" action="<?= site_url('auth/login') ?>">
+      <div class="form-group">
+        <input type="text" placeholder="Username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <input type="password" placeholder="Password" name="password" id="password" required>
+        <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+      </div>
+
+      <button type="submit" class="btn-submit">Login</button>
     </form>
 
-    <p class="message">
-        Don’t have an account? 
-        <a href="<?= site_url('auth/register') ?>">Register here</a>
-    </p>
-</div>
+    <div class="group">
+      Don’t have an account? <a href="<?= site_url('auth/register'); ?>">Register here</a>
+    </div>
+  </div>
+
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    if (togglePassword) {
+      togglePassword.addEventListener('click', function () {
+        const type = password.type === 'password' ? 'text' : 'password';
+        password.type = type;
+
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    }
+  </script>
 </body>
 </html>

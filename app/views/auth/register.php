@@ -1,136 +1,187 @@
-<?php
-defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account</title>
-<style>
-    * { box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+
+  <!-- Font Awesome for eye icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: #388e3c;
-        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #f5f9ff); /* blue gradient */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Background decoration */
-    .bg-decor {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background:
-            radial-gradient(600px 600px at 0% 0%, rgba(56,142,60,.12), transparent 60%),
-            radial-gradient(600px 600px at 100% 0%, rgba(76,175,80,.10), transparent 60%),
-            radial-gradient(600px 600px at 0% 100%, rgba(139,195,74,.08), transparent 60%),
-            radial-gradient(600px 600px at 100% 100%, rgba(102,187,106,.10), transparent 60%);
-        animation: floatBg 16s ease-in-out infinite alternate;
+    .register-container {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
-    /* Card container */
-    .card {
-        background: #ffffff;
-        border: 2px solid #a5d6a7;
-        border-radius: 14px; 
-        box-shadow: 0 10px 30px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.08); 
-        padding: 30px; 
-        width: 350px; 
-        text-align: center; 
-        animation: cardIn .6s ease-out forwards;
+    .register-container h2 {
+      font-size: 2em;
+      font-weight: 600;
+      color: #1565c0; /* professional blue */
+      margin-bottom: 20px;
     }
 
-    .card-header h2 {
-        margin: 0;
-        font-size: 24px;
-        color: #000000;
-        margin-bottom: 20px;
+    .form-group {
+      position: relative;
+      margin-bottom: 18px;
     }
 
-    input {
-        width: 100%; 
-        padding: 10px 14px; 
-        margin: 8px 0; 
-        border: 1px solid #ccc; 
-        border-radius: 10px; 
-        font-size: 14px;
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 40px 12px 14px;
+      font-size: 14px;
+      border: 1px solid #bbdefb; /* light blue */
+      border-radius: 8px;
+      background: #fff;
+      color: #333;
+      transition: 0.3s ease;
+      box-sizing: border-box;
     }
 
-    .btn-primary {
-        width: 100%;
-        padding: 10px 14px;
-        background: linear-gradient(135deg, #000000 0%, #333333 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        margin-top: 10px;
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #1e88e5; /* bright blue */
+      box-shadow: 0 0 6px rgba(30, 136, 229, 0.4);
+      outline: none;
     }
 
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #333333 0%, #555555 100%);
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.1em;
+      color: #1e88e5; /* blue icon */
     }
 
-    .message {
-        margin-top: 15px;
-        font-size: 14px;
-        color: red;
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #1565c0; /* dark blue */
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 5px;
     }
 
-    .message.success {
-        color: green;
+    .btn-submit:hover {
+      background: #0d47a1; /* navy blue */
+      transform: translateY(-2px);
     }
 
-    a {
-        color: #43a047; 
-        text-decoration: none; 
-        font-weight: bold;
+    .group {
+      margin-top: 15px;
+      font-size: 0.9em;
     }
 
-    a:hover {
-        text-decoration: underline;
+    .group a {
+      color: #1565c0;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.2s;
     }
 
-    @keyframes cardIn { to { transform: translateY(0); opacity: 1; } }
-    @keyframes floatBg { 
-        0% { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; } 
-        100% { background-position: 10% 5%, 90% 10%, 5% 90%, 95% 95%; } 
+    .group a:hover {
+      text-decoration: underline;
+      color: #0d47a1;
     }
-</style>
+
+    /* Error box */
+    .error-box {
+      background: rgba(244, 67, 54, 0.1);
+      color: #d32f2f;
+      padding: 10px;
+      border: 1px solid #e57373;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
+    }
+  </style>
 </head>
 <body>
-<div class="bg-decor"></div>
-<div class="card">
-    <div class="card-header">
-        <h2>Create Account</h2>
-    </div>
-
-    <?php if (!empty($flash['error'])): ?>
-        <p class="message"><?= $flash['error'] ?></p>
+  <div class="register-container">
+    <h2>Register</h2>
+    <?php if (!empty($error)): ?>
+      <div class="error-box">
+          <?= $error ?>
+      </div>
     <?php endif; ?>
-    <?php if (!empty($flash['success'])): ?>
-        <p class="message success"><?= $flash['success'] ?></p>
-    <?php endif; ?>
-
-    <form method="POST" action="<?= site_url('auth/register') ?>">
+    <form method="POST" action="<?= site_url('auth/register'); ?>">
+      
+      <div class="form-group">
         <input type="text" name="username" placeholder="Username" required>
+      </div>
+
+      <div class="form-group">
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit" class="btn-primary">Register</button>
+      </div>
+
+      <!-- Password field -->
+      <div class="form-group">
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+      </div>
+
+      <!-- Confirm Password field -->
+      <div class="form-group">
+        <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required>
+        <i class="fa-solid fa-eye toggle-password" id="toggleConfirmPassword"></i>
+      </div>
+
+      <div class="form-group">
+        <select name="role" required>
+          <option value="user" selected>User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Register</button>
     </form>
 
-    <p class="message">
-        Already have an account? 
-        <a href="<?= site_url('auth/login') ?>">Login</a>
-    </p>
-</div>
+    <div class="group">
+      Already have an account? <a href="<?= site_url('auth/login'); ?>">Login here</a>
+    </div>
+  </div>
+  
+  <script>
+    function toggleVisibility(toggleId, inputId) {
+      const toggle = document.getElementById(toggleId);
+      const input = document.getElementById(inputId);
+
+      toggle.addEventListener('click', function () {
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    }
+
+    toggleVisibility('togglePassword', 'password');
+    toggleVisibility('toggleConfirmPassword', 'confirmPassword');
+  </script>
 </body>
 </html>

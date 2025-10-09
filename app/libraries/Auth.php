@@ -1,48 +1,59 @@
 <?php
-class Auth
-{
-    protected $db;
-    protected $session;
+defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+
+/**
+ * Library: Auth
+ * 
+ * Automatically generated via CLI.
+ */
+class Auth {
+  protected $_lava;
 
     public function __construct()
     {
-        $lava = lava_instance();                // Get LavaLust instance
-        $lava->call->database();                // Initialize DB
-        $lava->call->library('session');        // Initialize session
-
-        $this->db = $lava->db;                  // Assign DB object
-        $this->session = $lava->session;        // Assign session object
+        // Library initialized
+        $this->_lava = lava_instance();
+        $this->_lava->call->database();
+        $this->_lava->call->library('session');
     }
-
-    /**
-     * Register a new account (no role)
+    /*
+     * Register a new user
+     *
+     * @param string $username
+     * @param string $password
+     * @param string $role
+     * @return bool
      */
-    public function register($username, $email, $password)
+    public function register($username, $email, $password, $role = 'user')
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        return $this->db->table('accounts')->insert([
-            'username'   => $username,
-            'email'      => $email,
-            'password'   => $hash,
+        return $this->_lava->db->table('users')->insert([
+            'username' => $username,
+            'email'    => $email,
+            'password' => $hash,
+            'role' => $role,
             'created_at' => date('Y-m-d H:i:s')
         ]);
     }
 
-    /**
-     * Login a user
+    /*
+     * Login user
+     *
+     * @param string $username
+     * @param string $password
+     * @return bool
      */
     public function login($username, $password)
     {
-        $user = $this->db->table('accounts')
+        $user = $this->_lava->db->table('users')
                          ->where('username', $username)
-                         ->get()
-                         ->row_array();  // ✅ convert to array
+                         ->get();
 
         if ($user && password_verify($password, $user['password'])) {
-            $this->session->set_userdata([
-                'user_id'   => $user['id'],
-                'username'  => $user['username'],
+            $this->_lava->session->set_userdata([
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'role' => $user['role'],
                 'logged_in' => true
             ]);
             return true;
@@ -51,20 +62,34 @@ class Auth
         return false;
     }
 
-    /**
-     * Check login status
+    /*
+     * Check if user is logged in
+     *
+     * @return bool
      */
     public function is_logged_in()
     {
-        return (bool) $this->session->userdata('logged_in');
+        return (bool) $this->_lava->session->userdata('logged_in');
     }
 
-    /**
-     * Logout
+    /*
+     * Check user role
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function has_role($role)
+    {
+        return $this->_lava->session->userdata('role') === $role;
+    }
+
+    /*
+     * Logout user
+     *
+     * @return void
      */
     public function logout()
     {
-        $this->session->unset_userdata(['user_id', 'username', 'logged_in']);
+        $this->_lava->session->unset_userdata(['id','username','role','logged_in']);
     }
 }
-?>
